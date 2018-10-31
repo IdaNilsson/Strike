@@ -43,26 +43,59 @@ namespace Strike.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
+        // GET: Users/Register
+        public IActionResult Register()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Users/Register
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Email,Password")] User user)
+        public async Task<IActionResult> Register([Bind("FirstName,LastName,Email,Password")] User user)
         {
             if (ModelState.IsValid)
             {
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                user.Password = hashedPassword;
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
+        }
+
+        // GET: Users/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Users/Login
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(string Email, string Password)
+        {
+            User user = _context.Users.SingleOrDefault(u => u.Email.Equals(Email, StringComparison.InvariantCultureIgnoreCase));
+            if (user == null) //Det finns ingen användare med epostadressen
+            { 
+                return View();
+                //skicka med felmeddelande
+            }
+
+            bool passwordMatches = BCrypt.Net.BCrypt.Verify(Password, user.Password);
+            if (!passwordMatches)//Lösenordet matchar inte
+            {
+                return View();
+                //skicka med felmeddelande
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Users/Edit/5
