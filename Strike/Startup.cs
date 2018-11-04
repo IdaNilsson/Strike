@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,18 @@ namespace Strike
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //För att se om användaren är inloggad
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Users/Login";
+                    options.Events.OnRedirectToLogin = (context) =>
+                    {
+                        context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    };
+                });
+
             services.AddDbContext<StrikeContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))); 
 
@@ -52,6 +65,7 @@ namespace Strike
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

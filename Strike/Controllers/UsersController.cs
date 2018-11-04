@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -95,7 +97,25 @@ namespace Strike.Controllers
                 //skicka med felmeddelande
             }
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, Email)
+            };
+
+            var userIdentity = new ClaimsIdentity(claims, "login");
+
+            ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+            await HttpContext.SignInAsync(principal);
+
             return RedirectToAction("Index", "Home");
+        }
+
+        // GET: Users/Logout
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login", "Users");
         }
 
         // GET: Users/Edit/5
