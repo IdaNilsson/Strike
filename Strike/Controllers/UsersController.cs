@@ -58,6 +58,14 @@ namespace Strike.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([Bind("FirstName,LastName,Email,Password")] User user)
         {
+            bool userExists = _context.Users.Any(u => u.Email.Equals(user.Email, StringComparison.InvariantCultureIgnoreCase));
+
+            if (userExists)
+            {
+                ViewData.Add("error", "E-postadressen existerar redan!");
+                return View(user);
+            }
+
             if (ModelState.IsValid)
             {
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -85,16 +93,16 @@ namespace Strike.Controllers
         {
             User user = _context.Users.SingleOrDefault(u => u.Email.Equals(Email, StringComparison.InvariantCultureIgnoreCase));
             if (user == null) //Det finns ingen användare med epostadressen
-            { 
+            {
+                ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
                 return View();
-                //skicka med felmeddelande
             }
 
             bool passwordMatches = BCrypt.Net.BCrypt.Verify(Password, user.Password);
             if (!passwordMatches)//Lösenordet matchar inte
             {
+                ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
                 return View();
-                //skicka med felmeddelande
             }
 
             var claims = new List<Claim>
