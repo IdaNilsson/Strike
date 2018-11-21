@@ -9,7 +9,7 @@ using Strike.Data;
 namespace Strike.Migrations
 {
     [DbContext(typeof(StrikeContext))]
-    [Migration("20181120185708_InitialCreate")]
+    [Migration("20181121114637_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,10 @@ namespace Strike.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Area");
+
+                    b.Property<string>("Conty");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAddOrUpdate()
@@ -73,12 +77,6 @@ namespace Strike.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Alias");
-
-                    b.Property<string>("Area");
-
-                    b.Property<string>("Conty");
 
                     b.Property<string>("Email");
 

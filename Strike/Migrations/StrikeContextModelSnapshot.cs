@@ -21,6 +21,10 @@ namespace Strike.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Area");
+
+                    b.Property<string>("Conty");
+
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasDefaultValueSql("datetime('now', 'localtime')");
@@ -71,12 +75,6 @@ namespace Strike.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Alias");
-
-                    b.Property<string>("Area");
-
-                    b.Property<string>("Conty");
 
                     b.Property<string>("Email");
 

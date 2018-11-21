@@ -30,10 +30,7 @@ namespace Strike.Migrations
                     Email = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    Alias = table.Column<string>(nullable: true),
-                    Conty = table.Column<string>(nullable: true),
-                    Area = table.Column<string>(nullable: true)
+                    Phone = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +48,9 @@ namespace Strike.Migrations
                     Description = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now', 'localtime')"),
-                    UserId = table.Column<int>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    Conty = table.Column<string>(nullable: true),
+                    Area = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

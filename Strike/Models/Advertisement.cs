@@ -18,6 +18,8 @@ namespace Strike.Models
         public DateTime CreatedDate { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public string Conty { get; set; }
+        public string Area { get; set; }
 
         //Many to many relation category-advertisement
         public List<AdvertisementCategory> AdvertisementCategories { get; set; }

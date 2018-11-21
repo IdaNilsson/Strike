@@ -5,25 +5,37 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Strike.Data;
 using Strike.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Strike.Controllers
 {
     public class AdvertisementsController : Controller
     {
         private readonly StrikeContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public AdvertisementsController(StrikeContext context)
+        public AdvertisementsController(StrikeContext context, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
         // GET: Advertisements
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search = null)
         {
             var strikeContext = _context.Advertisements.Include(a => a.User);
-            return View(await strikeContext.ToListAsync());
+            if (search == null)
+            {
+                return View(await strikeContext.ToListAsync());
+            }
+            else
+            {
+                return View(await strikeContext.Where(a => a.Name.Contains(search) || a.Description.Contains(search) || search == null).ToListAsync());
+            }
+            
         }
 
         // GET: Advertisements/Details/5
@@ -48,7 +60,6 @@ namespace Strike.Controllers
         // GET: Advertisements/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -57,15 +68,16 @@ namespace Strike.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Phone,CreatedDate,UserId")] Advertisement advertisement)
+        [Authorize]
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Phone,CreatedDate,Conty,Area")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
+               //int currentUserId =
                 _context.Add(advertisement);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", advertisement.UserId);
             return View(advertisement);
         }
 

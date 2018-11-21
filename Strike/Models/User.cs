@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,9 +16,7 @@ namespace Strike.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
-        public string Alias { get; set; }
-        public string Conty { get; set; }
-        public string Area { get; set; }
+
 
         //FK for advertisements
         public List<Advertisement> Advertisements { get; set; }

@@ -35,12 +35,24 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Hem</a></li>
                 </ul>
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Advertisements" asp-action="Index">Annonser</a></li>
+                </ul>
                 <ul class="nav navbar-nav pull-right">
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logout</a></li>
-                        <p>@User.Identity.Name</p>
+                        <li><a asp-area="" asp-controller="Advertisements" asp-action="Create">Skapa annons</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Min sida</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span>@User.Identity.Name</span>&nbsp;<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
+                            </ul>
+                        </li>
                     }
                     else
                     {
@@ -49,16 +61,17 @@
                     }
 
                 </ul>
+
+
             </div>
         </div>
-        <hr id="test" />
     </nav>
-
-    <footer class="footer">
-        <div>
-            <p>© 2018 Copyright Strike</p>
-        </div>
-    </footer>
+    
+    <!-- <footer class="footer">
+         <div>
+             <p>© 2018 Copyright Strike</p>
+         </div>
+     </footer> -->
 
     <div class="container body-content">
         @RenderBody()
