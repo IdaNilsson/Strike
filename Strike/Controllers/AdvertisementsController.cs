@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,18 +7,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Strike.Data;
 using Strike.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http.Authentication;
+using System.Security.Claims;
 
 namespace Strike.Controllers
 {
     public class AdvertisementsController : Controller
     {
         private readonly StrikeContext _context;
-        private readonly UserManager<User> _userManager;
 
-        public AdvertisementsController(StrikeContext context, UserManager<User> userManager)
+        public AdvertisementsController(StrikeContext context)
         {
-            _userManager = userManager;
             _context = context;
         }
 
@@ -67,13 +65,16 @@ namespace Strike.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]        
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Phone,CreatedDate,Conty,Area")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Phone,CreatedDate,County,Area")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
-               //int currentUserId =
+
+                var identity = (ClaimsIdentity)User.Identity;
+                int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+                advertisement.UserId = userId;
                 _context.Add(advertisement);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -94,7 +95,6 @@ namespace Strike.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", advertisement.UserId);
             return View(advertisement);
         }
 

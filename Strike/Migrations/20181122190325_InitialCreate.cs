@@ -49,7 +49,7 @@ namespace Strike.Migrations
                     Phone = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now', 'localtime')"),
                     UserId = table.Column<int>(nullable: false),
-                    Conty = table.Column<string>(nullable: true),
+                    County = table.Column<string>(nullable: true),
                     Area = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

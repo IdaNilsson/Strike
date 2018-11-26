@@ -23,7 +23,7 @@ namespace Strike.Migrations
 
                     b.Property<string>("Area");
 
-                    b.Property<string>("Conty");
+                    b.Property<string>("County");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAddOrUpdate()

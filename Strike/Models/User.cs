@@ -9,6 +9,8 @@ namespace Strike.Models
 {
     public class User
     {
+        public static string UserId = "UserId";
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Password { get; set; }

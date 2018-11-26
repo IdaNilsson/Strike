@@ -107,7 +107,8 @@ namespace Strike.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, Email)
+                new Claim(ClaimTypes.Name, Email),
+                new Claim(Models.User.UserId, user.Id.ToString())
             };
 
             var userIdentity = new ClaimsIdentity(claims, "login");

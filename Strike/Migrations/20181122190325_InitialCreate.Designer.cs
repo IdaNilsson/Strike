@@ -9,7 +9,7 @@ using Strike.Data;
 namespace Strike.Migrations
 {
     [DbContext(typeof(StrikeContext))]
-    [Migration("20181121114637_InitialCreate")]
+    [Migration("20181122190325_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Strike.Migrations
 
                     b.Property<string>("Area");
 
-                    b.Property<string>("Conty");
+                    b.Property<string>("County");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAddOrUpdate()
