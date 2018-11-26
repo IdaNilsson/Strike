@@ -9,7 +9,7 @@ using Strike.Data;
 namespace Strike.Migrations
 {
     [DbContext(typeof(StrikeContext))]
-    [Migration("20181122190325_InitialCreate")]
+    [Migration("20181126190156_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,8 @@ namespace Strike.Migrations
 
                     b.Property<double>("Price");
 
+                    b.Property<string>("Title");
+
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
@@ -59,6 +61,24 @@ namespace Strike.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("AdvertisementCategory");
+                });
+
+            modelBuilder.Entity("Strike.Models.AdvertisementImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AdvertisementId");
+
+                    b.Property<string>("Path");
+
+                    b.Property<long>("Size");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdvertisementId");
+
+                    b.ToTable("AdvertisementImages");
                 });
 
             modelBuilder.Entity("Strike.Models.Category", b =>
@@ -114,6 +134,14 @@ namespace Strike.Migrations
                     b.HasOne("Strike.Models.Category", "Category")
                         .WithMany("AdvertisementCategories")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Strike.Models.AdvertisementImage", b =>
+                {
+                    b.HasOne("Strike.Models.Advertisement", "Advertisement")
+                        .WithMany("AdvertisementImages")
+                        .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

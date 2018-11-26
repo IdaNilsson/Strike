@@ -33,7 +33,7 @@ namespace Strike
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //För att se om användaren är inloggad
+            //To see if user is loged in
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

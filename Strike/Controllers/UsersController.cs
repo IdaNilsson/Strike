@@ -92,14 +92,14 @@ namespace Strike.Controllers
         public async Task<IActionResult> Login(string Email, string Password)
         {
             User user = _context.Users.SingleOrDefault(u => u.Email.Equals(Email, StringComparison.InvariantCultureIgnoreCase));
-            if (user == null) //Det finns ingen användare med epostadressen
+            if (user == null) //No existing user with this email
             {
                 ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
                 return View();
             }
 
             bool passwordMatches = BCrypt.Net.BCrypt.Verify(Password, user.Password);
-            if (!passwordMatches)//Lösenordet matchar inte
+            if (!passwordMatches)//Password does not match
             {
                 ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
                 return View();

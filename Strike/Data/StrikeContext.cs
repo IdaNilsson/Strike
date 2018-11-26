@@ -16,6 +16,7 @@ namespace Strike.Data
 
         public DbSet<User> Users { get; set; } 
         public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<AdvertisementImage> AdvertisementImages { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +26,12 @@ namespace Strike.Data
                 .HasOne(a => a.User)
                 .WithMany(u => u.Advertisements)
                 .HasForeignKey(a => a.UserId);
+
+            //Forigenkey AdvertisementImage (One to many relation)
+            modelBuilder.Entity<AdvertisementImage>()
+                .HasOne(ai => ai.Advertisement)
+                .WithMany(a => a.AdvertisementImages)
+                .HasForeignKey(ai => ai.AdvertisementId);
 
             //Many to many relation AdvertisementCategory
             modelBuilder.Entity<AdvertisementCategory>()

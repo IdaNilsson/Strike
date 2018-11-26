@@ -44,6 +44,7 @@ namespace Strike.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
@@ -87,10 +88,36 @@ namespace Strike.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AdvertisementImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Size = table.Column<long>(nullable: false),
+                    Path = table.Column<string>(nullable: true),
+                    AdvertisementId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdvertisementImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AdvertisementImages_Advertisements_AdvertisementId",
+                        column: x => x.AdvertisementId,
+                        principalTable: "Advertisements",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AdvertisementCategory_CategoryId",
                 table: "AdvertisementCategory",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdvertisementImages_AdvertisementId",
+                table: "AdvertisementImages",
+                column: "AdvertisementId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_UserId",
@@ -110,10 +137,13 @@ namespace Strike.Migrations
                 name: "AdvertisementCategory");
 
             migrationBuilder.DropTable(
-                name: "Advertisements");
+                name: "AdvertisementImages");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Advertisements");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -9,22 +9,29 @@ using Strike.Data;
 using Strike.Models;
 using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
+using System.Collections.ObjectModel;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Strike.Controllers
 {
     public class AdvertisementsController : Controller
     {
         private readonly StrikeContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public AdvertisementsController(StrikeContext context)
+        public AdvertisementsController(StrikeContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+           _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Advertisements
         public async Task<IActionResult> Index(string search = null)
         {
-            var strikeContext = _context.Advertisements.Include(a => a.User);
+            var strikeContext = _context.Advertisements.Include(a => a.User).Include(a => a.AdvertisementImages);
             if (search == null)
             {
                 return View(await strikeContext.ToListAsync());
@@ -67,19 +74,47 @@ namespace Strike.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]        
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Description,Phone,CreatedDate,County,Area")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,County,Area")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
+                //Handle image upload
+                IFormFileCollection files = this.Request.Form.Files;
 
                 var identity = (ClaimsIdentity)User.Identity;
                 int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
                 advertisement.UserId = userId;
                 _context.Add(advertisement);
                 await _context.SaveChangesAsync();
+                SaveFileUploads(files, advertisement.Id);
                 return RedirectToAction(nameof(Index));
             }
             return View(advertisement);
+        }
+
+        private async void SaveFileUploads(IFormFileCollection files, int advertisementId)
+        {
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    //Places uploaded file in Uploads, generate UUID for filename + file extension
+                    string fileExtension = Path.GetExtension(file.FileName);
+                    string fileName = Guid.NewGuid() + fileExtension;
+                    string filePath = _hostingEnvironment.WebRootPath + "\\uploads\\" + fileName;
+                    //Copy file from user to server
+                    using (var inputStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        Stream stream = file.OpenReadStream();
+                        stream.Seek(0, SeekOrigin.Begin);
+                        stream.CopyTo(inputStream);
+                    }
+
+                    AdvertisementImage advertisementImage = new AdvertisementImage(file.Length, fileName, advertisementId);
+                    _context.AdvertisementImages.Add(advertisementImage);
+                    await _context.SaveChangesAsync();
+                }
+            }
         }
 
         // GET: Advertisements/Edit/5
@@ -103,7 +138,7 @@ namespace Strike.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Description,Phone,CreatedDate,UserId")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,UserId")] Advertisement advertisement)
         {
             if (id != advertisement.Id)
             {

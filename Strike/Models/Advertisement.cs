@@ -12,6 +12,7 @@ namespace Strike.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Title { get; set; }
         public double Price { get; set; }
         public string Description { get; set; }
         public string Phone { get; set; }
@@ -21,6 +22,9 @@ namespace Strike.Models
         public User User { get; set; }
         public string County { get; set; }
         public string Area { get; set; }
+
+        //FK for advertisementImages
+        public List<AdvertisementImage> AdvertisementImages { get; set; }
 
         public List<SelectListItem> Counties = new List<SelectListItem>( new SelectListItem[] {
             new SelectListItem { Text = "Blekinge", Value = "0" },

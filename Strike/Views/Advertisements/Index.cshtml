@@ -30,34 +30,30 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Namn</th>
+                    <th>Rubrik</th>
                     <th>Pris</th>
-                    <th>Beskrivning</th>
-                    <th>Telefonnummer</th>
                     <th>Annons skapad</th>
-                    <th>Användare</th>
-                    <th>Landskap</th>
-                    <th>Område</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.User.Id)</td>
-                        <td>@Html.DisplayFor(modelItem => item.County)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Area)</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-                            <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
-                        </td>
-                    </tr>
+                @{
+                    foreach (var item in Model)
+                    {
+                        {
+                            string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
+                            <tr>
+                                <td><img src="~/@img" /></td>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                                </td>
+                            </tr>
+                        }
+                    }
                 }
             </tbody>
         </table>
