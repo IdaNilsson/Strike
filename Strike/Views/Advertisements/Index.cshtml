@@ -30,27 +30,23 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Bild</th>
                     <th>Rubrik</th>
                     <th>Pris</th>
                     <th>Annons skapad</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="advertisement-index">
                 @{
                     foreach (var item in Model)
                     {
                         {
                             string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
-                            <tr>
-                                <td><img src="~/@img" /></td>
+                            <tr onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id})'")>
+                                <td><img class="img-responsive thumbnail" src="~/@img" /></td>
                                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
                                 <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
-                                </td>
                             </tr>
                         }
                     }

@@ -89,6 +89,15 @@ body {
     margin-bottom: 20px;
 }
 
+.thumbnail {
+    padding: 5px;
+    width: 150px;
+}
+
+.advertisement-index {
+    cursor: pointer;
+}
+
 .footer {
     text-align: center;
     background-color: #082F3D;

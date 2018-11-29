@@ -38,7 +38,7 @@ namespace Strike.Controllers
             }
             else
             {
-                return View(await strikeContext.Where(a => a.Name.Contains(search) || a.Description.Contains(search) || search == null).ToListAsync());
+                return View(await strikeContext.Where(a => a.Name/*Title?*/.Contains(search) || a.Description.Contains(search) || a.County.Contains(search) || a.Area.Contains(search) || search == null).ToListAsync());
             }
             
         }

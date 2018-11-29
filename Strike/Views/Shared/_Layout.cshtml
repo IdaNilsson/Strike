@@ -43,7 +43,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Advertisements" asp-action="Create">Skapa annons</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Index">Min sida</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="1">Min sida</a></li>  <!--HÅRDKODAT-->
                         <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
