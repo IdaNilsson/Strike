@@ -31,7 +31,7 @@ namespace Strike.Controllers
         // GET: Advertisements
         public async Task<IActionResult> Index(string search = null)
         {
-            var strikeContext = _context.Advertisements.Include(a => a.User).Include(a => a.AdvertisementImages);
+            var strikeContext = _context.Advertisements.Include(a => a.User).Include(a => a.AdvertisementImages).Include(a => a.AdvertisementCategories);
             if (search == null)
             {
                 return View(await strikeContext.ToListAsync());
@@ -65,6 +65,7 @@ namespace Strike.Controllers
         // GET: Advertisements/Create
         public IActionResult Create()
         {
+            ViewData["Categories"] = _context.Categories.ToList();
             return View();
         }
 
@@ -74,7 +75,7 @@ namespace Strike.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]        
         [Authorize]
-        public async Task<IActionResult> Create([Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,County,Area")] Advertisement advertisement)
+        public async Task<IActionResult> Create([Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,County,Area,CategoryIds")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +87,16 @@ namespace Strike.Controllers
                 advertisement.UserId = userId;
                 _context.Add(advertisement);
                 await _context.SaveChangesAsync();
+
+                //!!! Create AdvertisementCategory for each CategoryIds with advertisement.Id !!!
+                //advertisement.CategoryIds.Select(id => _context.AdvertisementCategories.Add(new AdvertisementCategory(advertisement.Id, id)));
+                //await _context.SaveChangesAsync();
+                foreach (int Id in advertisement.CategoryIds)
+                {
+                    _context.AdvertisementCategories.Add(new AdvertisementCategory(Id, advertisement.Id));
+                }
+                await _context.SaveChangesAsync();
+
                 SaveFileUploads(files, advertisement.Id);
                 return RedirectToAction(nameof(Index));
             }

@@ -65,7 +65,7 @@ namespace Strike.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdvertisementCategory",
+                name: "AdvertisementCategories",
                 columns: table => new
                 {
                     AdvertisementId = table.Column<int>(nullable: false),
@@ -73,15 +73,15 @@ namespace Strike.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdvertisementCategory", x => new { x.AdvertisementId, x.CategoryId });
+                    table.PrimaryKey("PK_AdvertisementCategories", x => new { x.AdvertisementId, x.CategoryId });
                     table.ForeignKey(
-                        name: "FK_AdvertisementCategory_Advertisements_AdvertisementId",
+                        name: "FK_AdvertisementCategories_Advertisements_AdvertisementId",
                         column: x => x.AdvertisementId,
                         principalTable: "Advertisements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AdvertisementCategory_Categories_CategoryId",
+                        name: "FK_AdvertisementCategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -109,9 +109,34 @@ namespace Strike.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Bilar" });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "Bildelar och tillbehör" });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 3, "Båtar" });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 4, "Båtdelar och tillbehör" });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 5, "Husvagnar och husbilar" });
+
             migrationBuilder.CreateIndex(
-                name: "IX_AdvertisementCategory_CategoryId",
-                table: "AdvertisementCategory",
+                name: "IX_AdvertisementCategories_CategoryId",
+                table: "AdvertisementCategories",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -134,7 +159,7 @@ namespace Strike.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdvertisementCategory");
+                name: "AdvertisementCategories");
 
             migrationBuilder.DropTable(
                 name: "AdvertisementImages");

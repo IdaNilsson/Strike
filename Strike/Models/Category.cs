@@ -8,6 +8,14 @@ namespace Strike.Models
 {
     public class Category
     {
+        public Category()
+        {
+
+        }
+        public Category(string Name)
+        {
+            this.Name = Name;
+        }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Name { get; set; }

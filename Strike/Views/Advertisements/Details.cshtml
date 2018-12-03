@@ -1,35 +1,40 @@
 ﻿@model Strike.Models.Advertisement
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Annonsdetaljer";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>Advertisement</h4>
+<div class="window-container container">
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
     <hr />
+    <div class="row">
+        <div class="col-md-10">
+            <img class="img-responsive" src="~/images/AbstractImg2.jpg" />
+        </div>
+        <div class="col-md-2">
+            <img class="img-responsive thumbnail" src="~/images/AbstractImg2.jpg" />
+        </div>
+        <div class="col-md-2">
+            <img class="img-responsive thumbnail" src="~/images/AbstractImg2.jpg" />
+        </div>
+    </div>
 
-    <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.Name)</dt>
-        <dd>@Html.DisplayFor(model => model.Name)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Title)</dt>
-        <dd>@Html.DisplayFor(model => model.Title)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Price)</dt>
-        <dd>@Html.DisplayFor(model => model.Price)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Description)</dt>
-        <dd>@Html.DisplayFor(model => model.Description)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Phone)</dt>
-        <dd>@Html.DisplayFor(model => model.Phone)</dd>
-        <dt>@Html.DisplayNameFor(model => model.CreatedDate)</dt>
-        <dd>@Html.DisplayFor(model => model.CreatedDate)</dd>
-        <dt>@Html.DisplayNameFor(model => model.County)</dt>
-        <dd>@Html.DisplayFor(model => model.County)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Area)</dt>
-        <dd>@Html.DisplayFor(model => model.Area)</dd>
-    </dl>
+    <div class="row advertisement-details">
+        <div class="col-md-7">
+            <p>@Html.DisplayFor(model => model.Description)</p>
+        </div>
+        <div class="col-md-5">
+            <p class="advertisement-info-price">Pris: @Html.DisplayFor(model => model.Price) kr</p>
+            <p>Säljare: @Html.DisplayFor(model => model.Name)</p>
+            <p>Skapad: @Html.DisplayFor(model => model.CreatedDate)</p>
+            <p>Plats: @Html.DisplayFor(model => model.Area), @Html.DisplayFor(model => model.County)</p>
+            <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
+            <button class="btn advertisement-button">Skicka meddelande till @Html.DisplayFor(model => model.Name)</button>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+

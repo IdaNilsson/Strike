@@ -10,7 +10,7 @@ body {
 }
 
 
-.body-content {
+.body-content {/*Gör denna ens något?*/
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -68,6 +68,19 @@ body {
 
 .window-container {
     margin-top: 100px;
+    background-color:aliceblue;
+}
+
+.parallax {
+    /* The image used */
+    background-image: url(../images/satellite.jpg);
+    /* Set a specific height */
+    height: 500px;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .map-img {
@@ -96,6 +109,19 @@ body {
 
 .advertisement-index {
     cursor: pointer;
+}
+
+.advertisement-info-price{
+    font-size: 20px;
+}
+
+.advertisement-details{
+    padding-top: 7px;
+}
+
+.row { /*HMM skriva över rowklassen?*/
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .footer {

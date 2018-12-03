@@ -22,6 +22,7 @@ namespace Strike.Models
         public User User { get; set; }
         public string County { get; set; }
         public string Area { get; set; }
+        public List<int> CategoryIds { get; set; }
 
         //FK for advertisementImages
         public List<AdvertisementImage> AdvertisementImages { get; set; }

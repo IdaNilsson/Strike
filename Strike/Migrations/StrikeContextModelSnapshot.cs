@@ -58,7 +58,7 @@ namespace Strike.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("AdvertisementCategory");
+                    b.ToTable("AdvertisementCategories");
                 });
 
             modelBuilder.Entity("Strike.Models.AdvertisementImage", b =>
@@ -89,6 +89,14 @@ namespace Strike.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new { Id = 1, Name = "Bilar" },
+                        new { Id = 2, Name = "Bildelar och tillbehör" },
+                        new { Id = 3, Name = "Båtar" },
+                        new { Id = 4, Name = "Båtdelar och tillbehör" },
+                        new { Id = 5, Name = "Husvagnar och husbilar" }
+                    );
                 });
 
             modelBuilder.Entity("Strike.Models.User", b =>

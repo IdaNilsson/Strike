@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<Strike.Models.Advertisement>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Annonser";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
-<div class="row">
+<div class="row window-container container">
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
     <div class="col-md-3">
         <div class="form-group">
             <form asp-action="Index">
@@ -23,35 +20,38 @@
             </form>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Bild</th>
-                    <th>Rubrik</th>
-                    <th>Pris</th>
-                    <th>Annons skapad</th>
-                </tr>
-            </thead>
-            <tbody class="advertisement-index">
-                @{
-                    foreach (var item in Model)
-                    {
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Bild</th>
+                        <th>Rubrik</th>
+                        <th>Pris</th>
+                        <th>Kategori</th>
+                        <th>Annons skapad</th>
+                    </tr>
+                </thead>
+                <tbody class="advertisement-index">
+                    @{
+                        foreach (var item in Model)
                         {
-                            string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
-                            <tr onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id})'")>
-                                <td><img class="img-responsive thumbnail" src="~/@img" /></td>
-                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                            </tr>
+                            {
+                                string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
+                                <tr onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id})'" )>
+                                    <td><img class="img-responsive thumbnail" src="~/@img" /></td>
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AdvertisementCategories)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                </tr>
+                            }
                         }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+

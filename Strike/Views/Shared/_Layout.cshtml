@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -42,8 +44,10 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
+                        string userId = ((ClaimsIdentity)User.Identity).FindFirst(Strike.Models.User.UserId).Value;
+
                         <li><a asp-area="" asp-controller="Advertisements" asp-action="Create">Skapa annons</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="1">Min sida</a></li>  <!--HÅRDKODAT-->
+                        <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Min sida</a></li>
                         <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -66,12 +70,12 @@
             </div>
         </div>
     </nav>
-    
-    <!-- <footer class="footer">
+
+   <footer class="footer">
          <div>
              <p>© 2018 Copyright Strike</p>
          </div>
-     </footer> -->
+     </footer>
 
     <div class="container body-content">
         @RenderBody()
