@@ -9,8 +9,7 @@ body {
     min-height: 100%;
 }
 
-
-.body-content {/*Gör denna ens något?*/
+.body-content { /*Gör denna ens något?*/
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -66,14 +65,17 @@ body {
     height: 50px;
 }
 
-.window-container {
+.blue {
+    background-color: aliceblue;
+}
+
+.margin-top {
     margin-top: 100px;
-    background-color:aliceblue;
 }
 
 .parallax {
     /* The image used */
-    background-image: url(../images/satellite.jpg);
+    background-image: url(../images/hand.jpg);
     /* Set a specific height */
     height: 500px;
     /* Create the parallax scrolling effect */
@@ -119,10 +121,6 @@ body {
     padding-top: 7px;
 }
 
-.row { /*HMM skriva över rowklassen?*/
-    margin-left: 0px;
-    margin-right: 0px;
-}
 
 .footer {
     text-align: center;

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 namespace Strike.Controllers
 {
@@ -31,16 +32,33 @@ namespace Strike.Controllers
         // GET: Advertisements
         public async Task<IActionResult> Index(string search = null)
         {
-            var strikeContext = _context.Advertisements.Include(a => a.User).Include(a => a.AdvertisementImages).Include(a => a.AdvertisementCategories);
+            List<Advertisement> advertisements;
+
             if (search == null)
             {
-                return View(await strikeContext.ToListAsync());
+                advertisements = await _context.Advertisements
+                    .Include(a => a.User)
+                    .Include(a => a.AdvertisementImages)
+                    .Include(a => a.AdvertisementCategories)
+                        .ThenInclude(ac => ac.Category)
+                    .ToListAsync();
             }
             else
             {
-                return View(await strikeContext.Where(a => a.Name/*Title?*/.Contains(search) || a.Description.Contains(search) || a.County.Contains(search) || a.Area.Contains(search) || search == null).ToListAsync());
+                advertisements = await _context.Advertisements
+                    .Where(a =>
+                    a.Title.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    a.Description.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    a.County.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    a.Area.Contains(search, StringComparison.OrdinalIgnoreCase))
+                    .Include(a => a.User)
+                    .Include(a => a.AdvertisementImages)
+                    .Include(a => a.AdvertisementCategories)
+                        .ThenInclude(ac => ac.Category)
+                    .ToListAsync();
             }
-            
+
+            return View(advertisements);
         }
 
         // GET: Advertisements/Details/5
@@ -91,9 +109,9 @@ namespace Strike.Controllers
                 //!!! Create AdvertisementCategory for each CategoryIds with advertisement.Id !!!
                 //advertisement.CategoryIds.Select(id => _context.AdvertisementCategories.Add(new AdvertisementCategory(advertisement.Id, id)));
                 //await _context.SaveChangesAsync();
-                foreach (int Id in advertisement.CategoryIds)
+                foreach (int id in advertisement.CategoryIds)
                 {
-                    _context.AdvertisementCategories.Add(new AdvertisementCategory(Id, advertisement.Id));
+                    _context.AdvertisementCategories.Add(new AdvertisementCategory(advertisement.Id, id));
                 }
                 await _context.SaveChangesAsync();
 
@@ -213,6 +231,20 @@ namespace Strike.Controllers
         private bool AdvertisementExists(int id)
         {
             return _context.Advertisements.Any(e => e.Id == id);
+        }
+
+        // GET: MyAdvertisements
+        public async Task<IActionResult> MyAdvertisements()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+
+            List<Advertisement> advertisements = await _context.Advertisements
+                .Where(a => a.UserId == userId)
+                .Include(a => a.AdvertisementImages)
+                .ToListAsync();
+
+            return View(advertisements);
         }
     }
 }

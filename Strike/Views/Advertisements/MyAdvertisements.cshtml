@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Strike.Models.Advertisement>
+@{
+    ViewData["Title"] = "Mina annonser";
+}
+<div class="blue margin-top container">
+    <h3>Annonser</h3>
+    <hr />
+    @{
+        foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>@item.Title</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+
+                    @{ string img = @item.AdvertisementImages.Count > 0 ? "uploads/" + @item.AdvertisementImages[0].Path : "images/default.png"; }
+                    <img class="img-responsive thumbnail" src="~/@img" />
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-default" asp-action="Edit">Redigera</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-default" asp-action="Delete">Radera</button>
+                </div>
+            </div>
+
+        }
+    }
+
+</div>

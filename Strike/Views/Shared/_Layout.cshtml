@@ -36,8 +36,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Hem</a></li>
-                </ul>
-                <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Advertisements" asp-action="Index">Annonser</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
@@ -47,13 +45,14 @@
                         string userId = ((ClaimsIdentity)User.Identity).FindFirst(Strike.Models.User.UserId).Value;
 
                         <li><a asp-area="" asp-controller="Advertisements" asp-action="Create">Skapa annons</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Min sida</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <span>@User.Identity.Name</span>&nbsp;<span class="caret"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a asp-area="" asp-controller="Advertisements" asp-action="MyAdvertisements">Mina annonser</a></li>
+                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Meddelanden</a></li>
+                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Inställningar</a></li>
                                 <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
                             </ul>
                         </li>

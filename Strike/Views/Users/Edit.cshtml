@@ -1,44 +1,76 @@
 ﻿@model Strike.Models.User
 
 @{
-    ViewData["Title"] = "Min sida";
+    ViewData["Title"] = "Inställningar";
 }
-<div class="row window-container container">
-    <h3>Min sida</h3>
+
+<div class="blue margin-top container">
+    <h3>Inställningar</h3>
     <hr />
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label">Förnamn</label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label">Efternamn</label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label">E-postadress</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label">Telefonnummer</label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label">Lösenord</label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Spara" class="btn btn-default" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-6 ">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label">Förnamn</label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label">Efternamn</label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">E-postadress</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label">Telefonnummer</label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6 my-page-password">
+            <form>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Nuvarande Lösenord</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Nytt Lösenord</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label">Upprepa nyttLösenord</label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="blue container">
+    <div class="row">
+        <div class="form-group col-md-12">
+            <form>
+                    <input type="submit" value="Spara" class="btn btn-default" />
+            </form>
+        </div>
+    </div>
+    </div>
+<div class="blue container">
+    <div class="row">
+        <div class="form-group col-md-12">
+            <form>
+                    <button class="btn btn-default" asp-action="Delete" asp-route-id="@Model.Id">Radera mitt Strike konto</button>
+            </form>
+        </div>
     </div>
 </div>
 
