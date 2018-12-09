@@ -9,7 +9,7 @@ using Strike.Data;
 namespace Strike.Migrations
 {
     [DbContext(typeof(StrikeContext))]
-    [Migration("20181130120656_InitialCreate")]
+    [Migration("20181206180839_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,10 +94,38 @@ namespace Strike.Migrations
 
                     b.HasData(
                         new { Id = 1, Name = "Bilar" },
-                        new { Id = 2, Name = "Bildelar och tillbehör" },
-                        new { Id = 3, Name = "Båtar" },
-                        new { Id = 4, Name = "Båtdelar och tillbehör" },
-                        new { Id = 5, Name = "Husvagnar och husbilar" }
+                        new { Id = 2, Name = "Båtar" },
+                        new { Id = 3, Name = "Husvagnar & husbilar" },
+                        new { Id = 4, Name = "Mopeder & A-traktor" },
+                        new { Id = 5, Name = "Motorcycklar" },
+                        new { Id = 6, Name = "Badrum/WC/bastu" },
+                        new { Id = 7, Name = "Kök" },
+                        new { Id = 8, Name = "Trädgård & uteplats" },
+                        new { Id = 9, Name = "Belysning" },
+                        new { Id = 10, Name = "Möbler" },
+                        new { Id = 11, Name = "Hemtextil & prydnad" },
+                        new { Id = 12, Name = "Vitvaror" },
+                        new { Id = 13, Name = "Kökstillbehör & poslin" },
+                        new { Id = 14, Name = "Verktyg" },
+                        new { Id = 15, Name = "Kläder" },
+                        new { Id = 16, Name = "Accessoarer" },
+                        new { Id = 17, Name = "Skor & väskor" },
+                        new { Id = 18, Name = "Leksaker" },
+                        new { Id = 20, Name = "Datorer & surfplattor" },
+                        new { Id = 22, Name = "Spel" },
+                        new { Id = 23, Name = "Foto & videokameror" },
+                        new { Id = 24, Name = "Stereo & surround" },
+                        new { Id = 25, Name = "Tv & projektor" },
+                        new { Id = 26, Name = "Telefoner & tillbehör" },
+                        new { Id = 27, Name = "Biljetter & presentkort" },
+                        new { Id = 28, Name = "Böcker & studentlitteratur" },
+                        new { Id = 29, Name = "Cycklar" },
+                        new { Id = 30, Name = "Djur" },
+                        new { Id = 31, Name = "Hobby & fritid" },
+                        new { Id = 32, Name = "Jakt & fiske" },
+                        new { Id = 33, Name = "Musikutrustning" },
+                        new { Id = 34, Name = "Camping & friluftsliv" },
+                        new { Id = 35, Name = "Träning & hälsa" }
                     );
                 });
 

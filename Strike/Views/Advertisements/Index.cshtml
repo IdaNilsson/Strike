@@ -22,22 +22,22 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="control-label">Landskap</label>
+                <label class="control-label">Kategori</label>
                 <select name="CategoryIds" class="form-control">
-                    @* @{
+                     @{
                         List<Category> categories = (List<Category>)ViewData["Categories"];
                         foreach (Category item in categories)
                         {
                             <option value="@item.Id">@item.Name</option>
                         }
                     }
-                    *@
+                    
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label class="control-label">Kategori</label>
+                <label class="control-label">Landskap</label>
                 <select name="CategoryIds" class="form-control">
                     @* @{
                         List<Category> categories = (List<Category>)ViewData["Categories"];
@@ -57,22 +57,30 @@
         foreach (var item in Model)
         {
             string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
-            <div class="row">
-                <div class="col-md-4">
-                    <span onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id })'" )><img class="img-responsive thumbnail" src="~/@img" /></span>
+            <div class="row advertisement-seperator">
+                <div class="col-md-2">
+                    <span onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id })'" )></span>
+                    <img class="advertisement-img" src="~/@img" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h3 onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id })'" )>@Html.DisplayFor(modelItem => item.Title)</h3>
                 </div>
                 <div class="col-md-4">
                     <h4>@Html.DisplayFor(modelItem => item.Price) kr</h4>
-                    <span>@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                    @if (item.CreatedDate.Date == DateTime.Now.Date)
+                    {
+                        <span>Idag @item.CreatedDate.ToString("HH:mm")</span>
+                    }
+                    else
+                    {
+                        <span>@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                    }
+
                     <br />
                     <span>@string.Join(", ", item.AdvertisementCategories.Select(ac => ac.Category.Name)), </span>
                     <span>@Html.DisplayFor(modelItem => item.County)</span>
                 </div>
             </div>
-            <hr />
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Strike.Models
         public string Description { get; set; }
         public string Phone { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DisplayFormat(DataFormatString = "{0:d MMM yyyy HH\\:mm}")]
         public DateTime CreatedDate { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }

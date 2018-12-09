@@ -33,7 +33,7 @@ namespace Strike.Controllers
         public async Task<IActionResult> Index(string search = null)
         {
             List<Advertisement> advertisements;
-
+            ViewData["Categories"] = await _context.Categories.ToListAsync();
             if (search == null)
             {
                 advertisements = await _context.Advertisements
