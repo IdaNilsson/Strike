@@ -81,6 +81,7 @@ namespace Strike.Controllers
         }
 
         // GET: Advertisements/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["Categories"] = _context.Categories.ToList();

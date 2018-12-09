@@ -1,9 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
-
-var areas = [
+﻿var areas = [
     { text: "Avaskär", value: "1" },
     { text: "Elleholm", value: "1" },
     { text: "Karlshamn", value: "1" },
@@ -148,7 +143,10 @@ var areas = [
     { text: "Vadstena", value: "25" },
 ];
 
+
 $(document).ready(function () {
+    $('.multi-select').selectize({});
+
     $('#county-select').on('change', function () {
         var area = $(this).find(':selected').attr('data-area');
         var areaSelect = $('#area-select');

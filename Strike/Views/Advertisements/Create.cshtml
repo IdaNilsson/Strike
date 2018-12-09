@@ -54,7 +54,7 @@
 
                 <div class="form-group">
                     <label class="control-label">Kategori</label>
-                    <select name="CategoryIds" required class="form-control">
+                    <select name="CategoryIds" multiple required class="form-control multi-select">
                         @{
                             List<Category> categories = (List<Category>)ViewData["Categories"];
                             foreach (Category item in categories)
