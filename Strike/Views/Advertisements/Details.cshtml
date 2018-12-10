@@ -7,16 +7,16 @@
     <h3>@Html.DisplayFor(model => model.Title)</h3>
     <hr />
     <div class="row">
-        <div class="col-md-10">
-            <img class="img-responsive" src="~/images/AbstractImg2.jpg" />
+        <div class="col-md-12" style="overflow-x:auto; max-height: 200px;">
+        @{
+            foreach (AdvertisementImage img in Model.AdvertisementImages)
+            {
+                <div style="display: inline-block">
+                    <a class="grouped_elements" rel="group1" href="~/uploads/@img.Path"><img class="advertisement-img" src="~/uploads/@img.Path" /></a>
+                </div>
+            }
+        }
         </div>
-        <div class="col-md-2">
-            <img class="advertisement-img" src="~/images/AbstractImg2.jpg" />
-        </div>
-        <div class="col-md-2">
-            <img class="advertisement-img" src="~/images/AbstractImg2.jpg" />
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-7">
             <p>@Html.DisplayFor(model => model.Description)</p>
@@ -29,10 +29,6 @@
             <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
             <button class="btn advertisement-button">Skicka meddelande till @Html.DisplayFor(model => model.Name)</button>
         </div>
-    </div>
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 

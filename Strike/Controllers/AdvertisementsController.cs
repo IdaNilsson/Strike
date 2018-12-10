@@ -87,6 +87,7 @@ namespace Strike.Controllers
 
             var advertisement = await _context.Advertisements
                 .Include(a => a.User)
+                .Include(a => a.AdvertisementImages)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (advertisement == null)
             {

@@ -146,6 +146,7 @@
 
 $(document).ready(function () {
     $('.multi-select').selectize({});
+    $("a.grouped_elements").fancybox();
 
     $('#county-select').on('change', function () {
         var area = $(this).find(':selected').attr('data-area');
