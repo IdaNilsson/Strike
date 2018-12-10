@@ -12,6 +12,7 @@ body {
 .body-content { /*Gör denna ens något?*/
     padding-left: 15px;
     padding-right: 15px;
+    min-height: 94vh;
 }
 
 /* Navbar */

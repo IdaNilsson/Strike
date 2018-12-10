@@ -30,11 +30,11 @@ namespace Strike.Controllers
         }
 
         // GET: Advertisements
-        public async Task<IActionResult> Index(string search = null)
+        public async Task<IActionResult> Index(string search = null, List<int> categoryIds = null, string county = null)
         {
             List<Advertisement> advertisements;
             ViewData["Categories"] = await _context.Categories.ToListAsync();
-            if (search == null)
+            if (search == null && categoryIds == null && county == null)
             {
                 advertisements = await _context.Advertisements
                     .Include(a => a.User)
@@ -46,16 +46,32 @@ namespace Strike.Controllers
             else
             {
                 advertisements = await _context.Advertisements
-                    .Where(a =>
-                    a.Title.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-                    a.Description.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-                    a.County.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-                    a.Area.Contains(search, StringComparison.OrdinalIgnoreCase))
                     .Include(a => a.User)
                     .Include(a => a.AdvertisementImages)
                     .Include(a => a.AdvertisementCategories)
                         .ThenInclude(ac => ac.Category)
                     .ToListAsync();
+
+                if (search != null)
+                {
+                    advertisements = advertisements
+                        .Where(a => a.Title.Contains(search, StringComparison.OrdinalIgnoreCase) || a.Description.Contains(search, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                }
+
+                if (categoryIds != null && categoryIds.Count > 0)
+                {
+                    advertisements = advertisements
+                       .Where(a => categoryIds == null || a.AdvertisementCategories.Any(ac => categoryIds.Contains(ac.CategoryId)))
+                       .ToList();
+                }
+
+                if (county != null && !county.Equals("Välj"))
+                {
+                    advertisements = advertisements
+                        .Where(a => county == null || a.County.Contains(county, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+                }
             }
 
             return View(advertisements);

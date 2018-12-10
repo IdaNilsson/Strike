@@ -10,7 +10,6 @@ namespace Strike.Views.Shared
     public class Constants
     {
         public static List<SelectListItem> Counties = new List<SelectListItem>(new SelectListItem[] {
-            new SelectListItem { Text = "Välj", Value = "0" },
             new SelectListItem { Text = "Blekinge", Value = "1" },
             new SelectListItem { Text = "Bohuslän", Value = "2" },
             new SelectListItem { Text = "Dalarna ", Value = "3" },

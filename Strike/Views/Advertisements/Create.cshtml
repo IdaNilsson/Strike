@@ -39,6 +39,7 @@
                 <div class="form-group">
                     <label asp-for="County" class="control-label">Landskap</label>
                     <select id="county-select" name="County" required class="form-control">
+                        <option value="" disabled selected>Välj...</option>
                         @foreach (SelectListItem item in Constants.Counties)
                         {
                             <option data-area="@item.Value" value="@item.Text">@item.Text</option>
@@ -55,6 +56,7 @@
                 <div class="form-group">
                     <label class="control-label">Kategori</label>
                     <select name="CategoryIds" multiple required class="form-control multi-select">
+                        <option value="" disabled selected>Välj...</option>
                         @{
                             List<Category> categories = (List<Category>)ViewData["Categories"];
                             foreach (Category item in categories)

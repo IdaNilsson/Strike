@@ -1,56 +1,53 @@
 ﻿@model IEnumerable<Strike.Models.Advertisement>
+@using Strike.Views.Shared;
 
 @{
     ViewData["Title"] = "Annonser";
 }
 <div class="blue margin-top container">
-    <p>
-        <a asp-action="Create">Skapa ny</a>
-    </p>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <form asp-action="Index">
-                    <div class="input-group">
-                        <input id="searchInput" name="search" class="form-control" />
-                        <span class="input-group-btn">
-                            <input type="submit" value="Sök" class="btn btn-default" />
-                        </span>
-                    </div>
-                </form>
+    <form asp-action="Index">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Sök</label>
+                    <input id="searchInput" name="search" class="form-control" />
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">Kategori</label>
-                <select name="CategoryIds" class="form-control">
-                     @{
-                        List<Category> categories = (List<Category>)ViewData["Categories"];
-                        foreach (Category item in categories)
-                        {
-                            <option value="@item.Id">@item.Name</option>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Kategori</label>
+                    <select name="categoryIds" class="form-control">
+                        <option value="" disabled selected>Välj...</option>
+                        @{
+                            List<Category> categories = (List<Category>)ViewData["Categories"];
+                            foreach (Category item in categories)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
                         }
-                    }
-                    
-                </select>
+
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">Landskap</label>
-                <select name="CategoryIds" class="form-control">
-                    @* @{
-                        List<Category> categories = (List<Category>)ViewData["Categories"];
-                        foreach (Category item in categories)
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label">Landskap</label>
+                    <select name="county" class="form-control">
+                        <option value="" disabled selected>Välj...</option>
+                        @foreach (SelectListItem item in Constants.Counties)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            <option data-area="@item.Value" value="@item.Text">@item.Text</option>
                         }
-                    }
-                    *@
-                </select>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <input class="btn btn-primary" value="Sök" type="submit"/>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
 
     @{
@@ -59,11 +56,13 @@
             string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
             <div class="row advertisement-seperator">
                 <div class="col-md-2">
-                    <span onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id })'" )></span>
-                    <img class="advertisement-img" src="~/@img" />
+
+                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })">
+                        <img class="advertisement-img" src="~/@img" />
+                    </a>
                 </div>
                 <div class="col-md-6">
-                    <h3 onclick="location.href='@Url.Action("Details", "Advertisements", new { @id = item.Id })'" )>@Html.DisplayFor(modelItem => item.Title)</h3>
+                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
                 </div>
                 <div class="col-md-4">
                     <h4>@Html.DisplayFor(modelItem => item.Price) kr</h4>
