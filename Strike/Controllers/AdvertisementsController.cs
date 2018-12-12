@@ -243,7 +243,7 @@ namespace Strike.Controllers
             var advertisement = await _context.Advertisements.FindAsync(id);
             _context.Advertisements.Remove(advertisement);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyAdvertisements));
         }
 
         private bool AdvertisementExists(int id)

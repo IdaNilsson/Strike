@@ -28,7 +28,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Price" class="control-label">Pris</label>
-                    <input asp-for="Price" required class="form-control" />
+                    <input asp-for="Price" required  type="number" min="0" class="form-control" />
                     <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,6 @@
                     <select id="area-select" name="Area" class="form-control"></select>
                     <span asp-validation-for="Area" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
                     <label class="control-label">Kategori</label>
                     <select name="CategoryIds" multiple required class="form-control multi-select">
@@ -66,7 +65,6 @@
                         }
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label asp-for="AdvertisementImages" class="control-label">Bild(er)</label>
                     <input asp-for="AdvertisementImages" multiple type="file" name="image" class="form-control" />

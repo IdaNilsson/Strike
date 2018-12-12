@@ -65,7 +65,7 @@
 
 /* General styling*/
 .blue {
-    background-color: aliceblue;
+    background-color: #d1e0e0;
 }
 
 .margin-top {
@@ -143,6 +143,22 @@
     padding-top: 7px;
 }
 
+/*Advertisement details*/
+
+.details-img {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: aliceblue;
+}
+.advertisement-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 1px solid lightgray;
+    padding-top: 20px;
+}
 /* Footer*/
 .footer {
     text-align: center;

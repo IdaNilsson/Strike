@@ -32,24 +32,30 @@
                     <input asp-for="Phone" class="form-control" />
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
+                <div>
+                    <input type="submit" value="Spara" class="btn btn-default center-block" />
+                </div>
             </form>
         </div>
         <div class="col-md-6 my-page-password">
             <form>
                 <div class="form-group">
-                    <label asp-for="Password" class="control-label">Nuvarande Lösenord</label>
-                    <input asp-for="Password" class="form-control" />
+                    <label class="control-label">Nuvarande Lösenord</label>
+                    <input class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password" class="control-label">Nytt Lösenord</label>
-                    <input asp-for="Password" class="form-control" />
+                    <label class="control-label">Nytt Lösenord</label>
+                    <input class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Password" class="control-label">Upprepa nyttLösenord</label>
-                    <input asp-for="Password" class="form-control" />
+                    <label class="control-label">Upprepa nyttLösenord</label>
+                    <input class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-default center-block" value="Spara"/>
                 </div>
             </form>
         </div>
@@ -59,16 +65,7 @@
     <div class="row">
         <div class="form-group col-md-12">
             <form>
-                    <input type="submit" value="Spara" class="btn btn-default" />
-            </form>
-        </div>
-    </div>
-    </div>
-<div class="blue container">
-    <div class="row">
-        <div class="form-group col-md-12">
-            <form>
-                    <button class="btn btn-default" asp-action="Delete" asp-route-id="@Model.Id">Radera mitt Strike konto</button>
+                    <button class="btn btn-default center-block" asp-action="Delete" asp-route-id="@Model.Id">Radera mitt Strike konto</button>
             </form>
         </div>
     </div>

@@ -7,19 +7,20 @@
     <h3>@Html.DisplayFor(model => model.Title)</h3>
     <hr />
     <div class="row">
-        <div class="col-md-12" style="overflow-x:auto; max-height: 200px;">
-        @{
-            foreach (AdvertisementImage img in Model.AdvertisementImages)
-            {
-                <div style="display: inline-block">
-                    <a class="grouped_elements" rel="group1" href="~/uploads/@img.Path"><img class="advertisement-img" src="~/uploads/@img.Path" /></a>
-                </div>
+        <div class="col-md-12 details-img">
+            @{
+                foreach (AdvertisementImage img in Model.AdvertisementImages)
+                {
+                    <div style="display: inline-block">
+                        <a class="grouped_elements" rel="group1" href="~/uploads/@img.Path"><img class="advertisement-img" src="~/uploads/@img.Path" /></a>
+                    </div>
+                }
             }
-        }
         </div>
-    <div class="row">
+    </div>
+    <div class="row advertisement-info">
         <div class="col-md-7">
-            <p>@Html.DisplayFor(model => model.Description)</p>
+            <span style="white-space: pre-line">@Html.DisplayFor(model => model.Description)</span>
         </div>
         <div class="col-md-5">
             <p class="advertisement-info-price">Pris: @Html.DisplayFor(model => model.Price) kr</p>
@@ -27,7 +28,7 @@
             <p>Skapad: @Html.DisplayFor(model => model.CreatedDate)</p>
             <p>Plats: @Html.DisplayFor(model => model.Area), @Html.DisplayFor(model => model.County)</p>
             <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
-            <button class="btn advertisement-button">Skicka meddelande till @Html.DisplayFor(model => model.Name)</button>
+            <button class="btn btn-default">Skicka meddelande till @Html.DisplayFor(model => model.Name)</button>
         </div>
     </div>
 </div>

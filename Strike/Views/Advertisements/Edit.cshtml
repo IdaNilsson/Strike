@@ -1,49 +1,87 @@
 ﻿@model Strike.Models.Advertisement
+@using Strike.Views.Shared;
+@using Strike.Models;
 
-@{
-    ViewData["Title"] = "Redigera";
-}
-<div class="container margin-top blue">
-    <h3>Redigera annonsen</h3>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Phone" class="control-label"></label>
-                    <input asp-for="Phone" class="form-control" />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UserId" class="control-label"></label>
-                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                    <span asp-validation-for="UserId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </form>
+
+    @{
+        ViewData["Title"] = "Redigera";
+    }
+    <div class="container margin-top blue">
+        <h3>Redigera annonsen</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label">Namn</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label">Telefonnummer</label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label">Rubrik</label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label">Pris</label>
+                        <input asp-for="Price" type="number" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label">Beskrivning</label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="County" class="control-label">Landskap</label>
+                        <select id="county-select" name="County" required class="form-control">
+                            <option value="" disabled selected>Välj...</option>
+                            @*
+            @foreach (SelectListItem item in Constants.Counties)
+        {
+            <option data-area="@item.Value" value="@item.Text">@item.Text</option>
+        }
+                            *@
+                        </select>
+                        <span asp-validation-for="County" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Area" class="control-label">Område</label>
+                        <select id="area-select" name="Area" class="form-control"></select>
+                        <span asp-validation-for="Area" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Kategori</label>
+                        <select name="CategoryIds" multiple required class="form-control multi-select">
+                            <option value="" disabled selected>Välj...</option>
+                            @*
+                @{
+                List<Category> categories = (List<Category>)ViewData["Categories"];
+                foreach (Category item in categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            }
+                            *@
+                        </select>
+                        <div class="form-group">
+                            <label asp-for="AdvertisementImages" class="control-label">Bild(er)</label>
+                            <input asp-for="AdvertisementImages" multiple type="file" name="image" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Spara" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-</div>
 
