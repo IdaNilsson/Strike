@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -148,7 +149,7 @@ namespace Strike.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email")] User user)
         {
             if (id != user.Id)
             {
@@ -210,6 +211,38 @@ namespace Strike.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        [HttpPost, ActionName("ChangePassword")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(int id, [FromForm] ChangePasswordForm changePasswordForm)
+        {
+            string referer = Request.Headers["Referer"].ToString();
+            var identity = (ClaimsIdentity)User.Identity;
+            int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+            User loggedInUser = await _context.Users.FindAsync(userId);
+
+            bool passwordMatches = BCrypt.Net.BCrypt.Verify(changePasswordForm.CurrentPassword, loggedInUser.Password);
+
+            if (!passwordMatches)
+            {
+                ViewData.Add("error", "Felaktigt lösenord!");
+                return View("Edit", loggedInUser);
+            }
+
+            if (!changePasswordForm.NewPassword.Equals(changePasswordForm.RepeatNewPassword))
+            {
+                ViewData.Add("error", "Lösenorden matchar inte!");
+                return View("Edit", loggedInUser);
+            }
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(changePasswordForm.NewPassword);
+            loggedInUser.Password = hashedPassword;
+
+            _context.Update(loggedInUser);
+            await _context.SaveChangesAsync();
+            ViewData.Add("success", "Lösenordet är nu ändrat!");
+            return View("Edit", loggedInUser);
         }
     }
 }

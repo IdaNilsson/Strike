@@ -38,26 +38,30 @@
             </form>
         </div>
         <div class="col-md-6 my-page-password">
-            <form>
+            <form asp-action="ChangePassword" method="post">
                 <div class="form-group">
-                    <label class="control-label">Nuvarande Lösenord</label>
-                    <input class="form-control" />
+                    <label class="control-label">Nuvarande lösenord</label>
+                    <input name="currentPassword" class="form-control" type="password"  />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Nytt Lösenord</label>
-                    <input class="form-control" />
+                    <label class="control-label">Nytt lösenord</label>
+                    <input name="newPassword" class="form-control" type="password"  />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Upprepa nyttLösenord</label>
-                    <input class="form-control" />
+                    <label class="control-label">Upprepa nytt lösenord</label>
+                    <input name="repeatNewPassword" class="form-control" type="password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div>
-                    <input type="submit" class="btn btn-default center-block" value="Spara"/>
+                    <input type="submit" class="btn btn-default center-block" value="Spara" />
                 </div>
             </form>
+            <div class="text-center">
+                <span class="text-danger">@ViewData["error"]</span>
+                <span class="text-success">@ViewData["success"]</span>
+            </div>
         </div>
     </div>
 </div>
