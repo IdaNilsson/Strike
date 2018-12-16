@@ -39,8 +39,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Hem</a></li>
-                    <li><a asp-area="" asp-controller="Advertisements" asp-action="Index">Annonser</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span>&nbsp;Hem</a></li>
+                    <li><a asp-area="" asp-controller="Advertisements" asp-action="Index"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Annonser</a></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
 
@@ -48,16 +48,16 @@
                     {
                         string userId = ((ClaimsIdentity)User.Identity).FindFirst(Strike.Models.User.UserId).Value;
 
-                        <li><a asp-area="" asp-controller="Advertisements" asp-action="Create">Skapa annons</a></li>
+                        <li><a asp-area="" asp-controller="Advertisements" asp-action="Create"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Skapa annons</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;<span>@User.Identity.Name</span>&nbsp;<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a asp-area="" asp-controller="Advertisements" asp-action="MyAdvertisements">Mina annonser</a></li>
-                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Meddelanden</a></li>
-                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId">Inställningar</a></li>
-                                <li><a asp-area="" asp-controller="Users" asp-action="Logout">Logga ut</a></li>
+                                <li><a asp-area="" asp-controller="Advertisements" asp-action="MyAdvertisements"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Mina annonser</a></li>
+                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId"><span class="glyphicon glyphicon-envelope"></span>&nbsp;Meddelanden</a></li>
+                                <li><a asp-area="" asp-controller="Users" asp-action="Edit" asp-route-id="@userId"><span class="glyphicon glyphicon-cog"></span>&nbsp;Inställningar</a></li>
+                                <li><a asp-area="" asp-controller="Users" asp-action="Logout"><span class="glyphicon glyphicon-off"></span>&nbsp;Logga ut</a></li>
                             </ul>
                         </li>
                     }
@@ -76,7 +76,7 @@
 
    <footer class="footer">
          <div>
-             <p>© 2018 Copyright Strike</p>
+             <p><span class="glyphicon glyphicon-copyright-mark"></span>&nbsp; 2018 Copyright Strike</p>
          </div>
      </footer>
 

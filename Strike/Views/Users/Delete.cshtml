@@ -10,7 +10,7 @@
     </div>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Radera mitt konto" class="btn btn-default" /> |
+        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Radera mitt konto</button>
         <a asp-action="Edit" asp-route-id="@Model.Id">Tillbaka till min sida</a>
     </form>
 </div>
