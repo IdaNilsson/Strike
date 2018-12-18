@@ -148,35 +148,31 @@ namespace Strike.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Email")] User user)
+        public async Task<IActionResult> Edit(string FirstName, string LastName, string Email, string Phone)
         {
-            if (id != user.Id)
+            var identity = (ClaimsIdentity)User.Identity;
+            int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+            User loggedInUser = await _context.Users.FindAsync(userId);
+
+            bool hasChanged = 
+                !FirstName.Equals(loggedInUser.FirstName) ||
+                !LastName.Equals(loggedInUser.LastName) ||
+                !Email.Equals(loggedInUser.Email) ||
+                !Phone.Equals(loggedInUser.Phone);
+
+            if (hasChanged)
             {
-                return NotFound();
+                loggedInUser.FirstName = FirstName;
+                loggedInUser.LastName = LastName;
+                loggedInUser.Email = Email;
+                loggedInUser.Phone = Phone;
+
+                _context.Update(loggedInUser);
+                await _context.SaveChangesAsync();
+                ViewData.Add("changed", "Dina inställningar är nu uppdaterade!");
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
+            return View(loggedInUser);
         }
 
         // GET: Users/Delete/5

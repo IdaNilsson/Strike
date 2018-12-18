@@ -172,11 +172,15 @@ namespace Strike.Controllers
                 return NotFound();
             }
 
-            var advertisement = await _context.Advertisements.FindAsync(id);
+            var advertisement = await _context.Advertisements
+                .Include(a => a.AdvertisementCategories)
+                .Include(a => a.AdvertisementImages)
+                .FirstOrDefaultAsync(a => a.Id == id);
             if (advertisement == null)
             {
                 return NotFound();
             }
+            ViewData["Categories"] = _context.Categories.ToList();
             return View(advertisement);
         }
 
@@ -187,6 +191,8 @@ namespace Strike.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,UserId")] Advertisement advertisement)
         {
+
+
             if (id != advertisement.Id)
             {
                 return NotFound();
@@ -263,6 +269,15 @@ namespace Strike.Controllers
                 .ToListAsync();
 
             return View(advertisements);
+        }
+
+        public async Task<IActionResult> DeleteImage(int? id)   
+        {
+            var img = await _context.AdvertisementImages.FindAsync(id);
+            _context.AdvertisementImages.Remove(img);
+            await _context.SaveChangesAsync();
+            ViewData["Categories"] = _context.Categories.ToList();
+            return RedirectToAction("Edit", new { id =  img.AdvertisementId});
         }
     }
 }

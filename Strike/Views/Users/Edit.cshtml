@@ -36,23 +36,23 @@
                     <button type="submit" class="btn btn-default center-block"><span class="glyphicon glyphicon-ok"></span>&nbsp;Spara</button>
                 </div>
             </form>
+            <div class="text-center">
+                <span class="text-success">@ViewData["changed"]</span>
+            </div>
         </div>
         <div class="col-md-6 my-page-password">
             <form asp-action="ChangePassword" method="post">
                 <div class="form-group">
                     <label class="control-label">Nuvarande lösenord</label>
                     <input name="currentPassword" class="form-control" type="password"  />
-                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nytt lösenord</label>
                     <input name="newPassword" class="form-control" type="password"  />
-                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Upprepa nytt lösenord</label>
                     <input name="repeatNewPassword" class="form-control" type="password" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-default center-block"><span class="glyphicon glyphicon-ok"></span>&nbsp;Spara</button>
