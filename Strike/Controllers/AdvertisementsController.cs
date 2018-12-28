@@ -124,9 +124,6 @@ namespace Strike.Controllers
                 _context.Add(advertisement);
                 await _context.SaveChangesAsync();
 
-                //!!! Create AdvertisementCategory for each CategoryIds with advertisement.Id !!!
-                //advertisement.CategoryIds.Select(id => _context.AdvertisementCategories.Add(new AdvertisementCategory(advertisement.Id, id)));
-                //await _context.SaveChangesAsync();
                 foreach (int id in advertisement.CategoryIds)
                 {
                     _context.AdvertisementCategories.Add(new AdvertisementCategory(advertisement.Id, id));
@@ -189,38 +186,51 @@ namespace Strike.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,UserId")] Advertisement advertisement)
+        public async Task<IActionResult> Edit(int id, string Name, string Title, double Price, string Description, string Phone, List<int> CategoryIds)
         {
+            Advertisement advertisement = await _context.Advertisements.FindAsync(id);
+            List<AdvertisementCategory> advertisementCategories = await _context.AdvertisementCategories.Where(ac => ac.AdvertisementId == id).ToListAsync();
+            IFormFileCollection files = this.Request.Form.Files;
 
+            bool hasChanged =
+                !Name.Equals(advertisement.Name) ||
+                !Title.Equals(advertisement.Title) ||
+                !Description.Equals(advertisement.Description) ||
+                !Phone.Equals(advertisement.Phone) ||
+                Price != advertisement.Price;
 
-            if (id != advertisement.Id)
+            if (hasChanged)
             {
-                return NotFound();
+                advertisement.Name = Name;
+                advertisement.Title = Title;
+                advertisement.Description = Description;
+                advertisement.Phone = Phone;
+                advertisement.Price = Price;
+            }
+            _context.Update(advertisement);
+            await _context.SaveChangesAsync();
+
+            foreach (AdvertisementCategory advertisementCategory in advertisementCategories)
+            {
+                _context.AdvertisementCategories.Remove(advertisementCategory);
             }
 
-            if (ModelState.IsValid)
+            await _context.SaveChangesAsync();
+
+            foreach (int categoryId in CategoryIds)
             {
-                try
-                {
-                    _context.Update(advertisement);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AdvertisementExists(advertisement.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.AdvertisementCategories.Add(new AdvertisementCategory(id, categoryId));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", advertisement.UserId);
-            return View(advertisement);
+
+            await _context.SaveChangesAsync();
+
+            SaveFileUploads(files, id);
+
+            ViewData.Add("changed", "Dina inställningar är nu uppdaterade!");
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Advertisements/Delete/5
         public async Task<IActionResult> Delete(int? id)
