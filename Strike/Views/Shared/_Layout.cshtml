@@ -49,8 +49,10 @@
                         string userId = ((ClaimsIdentity)User.Identity).FindFirst(Strike.Models.User.UserId).Value;
 
                         <li><a asp-area="" asp-controller="Advertisements" asp-action="Create"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Skapa annons</a></li>
+                        
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span id="message-badge"></span>
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;<span>@User.Identity.Name</span>&nbsp;<span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">

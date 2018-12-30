@@ -148,5 +148,20 @@ namespace Strike.Controllers
 
             return View(loggedInUser.SentMessages);
         }
+
+        //Returns count of unread messages
+        [HttpGet]
+        public JsonResult GetUnreadCount()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+            User loggedInUser = _context.Users
+                .Include(u => u.ReceivedMessages)
+                    .ThenInclude(rm => rm.Message)
+                .FirstOrDefault(u => u.Id == userId);
+            int unreadMessagesCount = loggedInUser.ReceivedMessages.Where(rm => !rm.Message.IsRead).Count();
+
+            return Json(new { count = unreadMessagesCount });
+        }
     }
 }

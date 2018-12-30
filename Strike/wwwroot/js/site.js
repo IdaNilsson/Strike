@@ -145,9 +145,12 @@
 
 
 $(document).ready(function () {
+    //selectize
     $('.multi-select').selectize({});
+    //fancybox
     $("a.grouped_elements").fancybox();
 
+    //When selected county, the cities in that county displays
     $('#county-select').on('change', function () {
         var area = $(this).find(':selected').attr('data-area');
         var areaSelect = $('#area-select');
@@ -160,6 +163,25 @@ $(document).ready(function () {
         console.log("append", areasToAppend);
         for (var i = 0; i < areasToAppend.length; i++) {
             areaSelect.append('<option value="' + areasToAppend[i].text + '">' + areasToAppend[i].text + '</option>');
+        }
+    });
+
+    //Fetch unread message count
+    $.get("/Messages/GetUnreadCount", function (data) {
+        if (data.count > 0) {
+            $("#message-badge").text(data.count);
+            //change color if count < 1
+            $("#message-badge").addClass("label label-danger");
+            //Twinkle twinkle
+            setInterval(function () {
+                $("#message-badge").fadeTo(1400, 0.1);
+                $("#message-badge").fadeTo(700, 1.0);
+            }, 4000)
+        }
+        else {
+            $("#message-badge").text(0);
+            //change color if count > 1
+            $("#message-badge").addClass("label label-default");
         }
     });
 });
