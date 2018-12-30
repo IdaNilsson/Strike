@@ -2,30 +2,30 @@
 @{
     ViewData["Title"] = "Mina annonser";
 }
-<div class="blue margin-top container">
-    <h3>Annonser</h3>
-    <hr />
-    @{
-        foreach (var item in Model)
-        {
-            string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
-            <div class="row advertisement-seperator">
-                <div class="col-md-2">
+<div class="header-color margin-top container">
+    <div class="striped">
+        @{
+            foreach (var item in Model)
+            {
+                string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
+                <div class="row advertisement-seperator">
+                    <div class="col-md-2">
 
-                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })">
-                        <img class="advertisement-img" src="~/@img" />
-                    </a>
+                        <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })">
+                            <img class="advertisement-img" src="~/@img" />
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Redigera</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Radera</a>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
-                </div>
-                <div class="col-md-2">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Redigera</a>
-                </div>
-                <div class="col-md-2">
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Radera</a>
-                </div>
-            </div>
+            }
         }
-    }
+    </div>
 </div>

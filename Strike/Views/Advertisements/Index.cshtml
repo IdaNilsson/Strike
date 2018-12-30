@@ -4,9 +4,9 @@
 @{
     ViewData["Title"] = "Annonser";
 }
-<div class="blue margin-top container search-container">
+<div class="header-color margin-top container">
     <form asp-action="Index">
-        <div class="row ">
+        <div class="row search-container">
             <div class="col-md-4">
                 <div class="form-group">
                     <input id="searchInput" name="search" placeholder="Sök..." class="form-control" />
@@ -46,41 +46,39 @@
         </div>
     </form>
 
+    <div class="striped">
+        @{
+            foreach (var item in Model)
+            {
+                string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
+                <div class="row advertisement-seperator">
+                    <div class="col-md-2">
 
-    @{
-        foreach (var item in Model)
-        {
-            string img = item.AdvertisementImages.Count > 0 ? "uploads/" + item.AdvertisementImages[0].Path : "images/default.png";
-            <div class="row advertisement-seperator">
-                <div class="col-md-2">
+                        <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })">
+                            <img class="advertisement-img" src="~/@img" />
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>@Html.DisplayFor(modelItem => item.Price) kr</h4>
+                        @if (item.CreatedDate.Date == DateTime.Now.Date)
+                        {
+                            <span>Idag @item.CreatedDate.ToString("HH:mm")</span>
+                        }
+                        else
+                        {
+                            <span>@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                        }
 
-                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })">
-                        <img class="advertisement-img" src="~/@img" />
-                    </a>
+                        <br />
+                        <span>@string.Join(", ", item.AdvertisementCategories.Select(ac => ac.Category.Name)), </span>
+                        <span>@Html.DisplayFor(modelItem => item.County)</span>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <a href="@Url.Action("Details", "Advertisements", new { @id = item.Id })"><h3>@Html.DisplayFor(modelItem => item.Title)</h3></a>
-                </div>
-                <div class="col-md-4">
-                    <h4>@Html.DisplayFor(modelItem => item.Price) kr</h4>
-                    @if (item.CreatedDate.Date == DateTime.Now.Date)
-                    {
-                        <span>Idag @item.CreatedDate.ToString("HH:mm")</span>
-                    }
-                    else
-                    {
-                        <span>@Html.DisplayFor(modelItem => item.CreatedDate)</span>
-                    }
-
-                    <br />
-                    <span>@string.Join(", ", item.AdvertisementCategories.Select(ac => ac.Category.Name)), </span>
-                    <span>@Html.DisplayFor(modelItem => item.County)</span>
-                </div>
-            </div>
+            }
         }
-    }
-    <div>
-        <p>Nästa sida ></p>
     </div>
 
 </div>

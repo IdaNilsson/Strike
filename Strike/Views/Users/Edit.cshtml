@@ -4,11 +4,14 @@
     ViewData["Title"] = "Inställningar";
 }
 
-<div class="blue margin-top container">
-    <h3>Inställningar</h3>
-    <hr />
-    <div class="row">
-        <div class="col-md-6 ">
+<div class="header-color margin-top container">
+    <div class="row header-title">
+        <div class="col-md-3">
+            <span>Inställningar</span>
+        </div>
+    </div>
+    <div class="row edit-color" style="background-color:#F4F4F4">
+        <div class="col-md-6">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
@@ -44,11 +47,11 @@
             <form asp-action="ChangePassword" method="post">
                 <div class="form-group">
                     <label class="control-label">Nuvarande lösenord</label>
-                    <input name="currentPassword" class="form-control" type="password"  />
+                    <input name="currentPassword" class="form-control" type="password" />
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nytt lösenord</label>
-                    <input name="newPassword" class="form-control" type="password" minlength="8"  />
+                    <input name="newPassword" class="form-control" type="password" minlength="8" />
                 </div>
                 <div class="form-group">
                     <label class="control-label">Upprepa nytt lösenord</label>
@@ -65,8 +68,8 @@
         </div>
     </div>
 </div>
-<div class="blue container">
-    <div class="row">
+<div class="header-color container">
+    <div class="row edit-color" style="background-color:#F4F4F4">
         <div class="form-group col-md-12">
             <form>
                 <button class="btn btn-danger center-block" asp-action="Delete" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-remove"></span>&nbsp;Radera mitt Strike konto</button>

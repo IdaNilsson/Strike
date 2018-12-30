@@ -2,42 +2,55 @@
 @{
     ViewData["Title"] = "Mottagna meddelanden";
 }
-<div class="blue margin-top container">
-    <h3>Inkorg</h3>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
+<div class="header-color margin-top container">
+    <div class="row header-title">
+        <div class="col-md-3">
             <span>Avsändare</span>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <span>Ämne</span>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <span>Skickat</span>
         </div>
     </div>
+    <div class="striped">
+        @{
+            foreach (var item in Model)
+            {
 
-    @{
-        foreach (var item in Model)
-        {
-            
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        @if (item.Message.IsRead)
+                        {
+                            <span class="glyphicon glyphicon-envelope inbox-info"></span>
+                        }
+                        else
+                        {
+                            <span class="glyphicon glyphicon-envelope text-danger inbox-info"></span>
+                        }
+                        &nbsp;
                         <a href="@Url.Action("Details", "Messages", new { @id = item.MessageId })">
                             <span>@item.User.FirstName&nbsp;@item.User.LastName</span>
                         </a>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <a href="@Url.Action("Details", "Messages", new { @id = item.MessageId })">
                             <span>@item.Message.Subject</span>
                         </a>
                     </div>
-                    <div class="col-md-4">
-                        <span>@item.Message.Created</span>
+                    <div class="col-md-3">
+                        @if (item.Message.Created.Date == DateTime.Now.Date)
+                        {
+                            <span>Idag @item.Message.Created.ToString("HH:mm")</span>
+                        }
+                        else
+                        {
+                            <span>@Html.DisplayFor(modelItem => item.Message.Created)</span>
+                        }
                     </div>
                 </div>
-            
+            }
         }
-    }
-
+    </div>
 </div>

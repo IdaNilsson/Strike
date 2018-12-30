@@ -51,6 +51,8 @@ namespace Strike.Controllers
         {
             ViewData["receiverUserId"] = receiverUserId;
             ViewData["advertisementId"] = advertisementId;
+            Advertisement advertisement = _context.Advertisements.Find(advertisementId);
+            ViewData["Title"] = "Skicka meddelande till " + advertisement.Name;
             return View();
         }
 
