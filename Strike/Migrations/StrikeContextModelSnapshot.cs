@@ -127,6 +127,64 @@ namespace Strike.Migrations
                     );
                 });
 
+            modelBuilder.Entity("Strike.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("datetime('now', 'localtime')");
+
+                    b.Property<bool>("IsRead");
+
+                    b.Property<string>("Subject");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Strike.Models.MessageReceiver", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MessageId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MessageReceivers");
+                });
+
+            modelBuilder.Entity("Strike.Models.MessageSender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MessageId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageId")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MessageSenders");
+                });
+
             modelBuilder.Entity("Strike.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -180,6 +238,32 @@ namespace Strike.Migrations
                     b.HasOne("Strike.Models.Advertisement", "Advertisement")
                         .WithMany("AdvertisementImages")
                         .HasForeignKey("AdvertisementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Strike.Models.MessageReceiver", b =>
+                {
+                    b.HasOne("Strike.Models.Message", "Message")
+                        .WithOne("MessageReceiver")
+                        .HasForeignKey("Strike.Models.MessageReceiver", "MessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Strike.Models.User", "User")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Strike.Models.MessageSender", b =>
+                {
+                    b.HasOne("Strike.Models.Message", "Message")
+                        .WithOne("MessageSender")
+                        .HasForeignKey("Strike.Models.MessageSender", "MessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Strike.Models.User", "User")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

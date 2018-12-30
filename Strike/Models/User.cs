@@ -30,5 +30,10 @@ namespace Strike.Models
 
         //FK for advertisements
         public List<Advertisement> Advertisements { get; set; }
+
+        //FK for send and recived messages
+
+        public List<MessageSender> SentMessages { get; set; }
+        public List<MessageReceiver> ReceivedMessages { get; set; }
     }
 }

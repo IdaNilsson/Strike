@@ -1,0 +1,31 @@
+﻿@model Strike.Models.Message
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Message</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="receiverUserId" value="@ViewData["receiverUserId"]" />
+            <input type="hidden" name="advertisementId" value="@ViewData["advertisementId"]" />
+            <div class="form-group">
+                <input asp-for="Subject" class="form-control" placeholder="Ämne..." />
+                <span asp-validation-for="Subject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <textarea asp-for="Text" class="form-control" placeholder="Meddelande..."></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Skicka" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

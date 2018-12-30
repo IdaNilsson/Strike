@@ -20,6 +20,9 @@ namespace Strike.Data
         public DbSet<AdvertisementImage> AdvertisementImages { get; set; }
         public DbSet<AdvertisementCategory> AdvertisementCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<MessageSender> MessageSenders { get; set; }
+        public DbSet<MessageReceiver> MessageReceivers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +42,7 @@ namespace Strike.Data
             modelBuilder.Entity<AdvertisementCategory>()
                 .HasKey(ac => new { ac.AdvertisementId, ac.CategoryId });
 
+            //Forigenkey AdvertisementCategory (many to many relation)
             modelBuilder.Entity<AdvertisementCategory>()
                 .HasOne(ac => ac.Advertisement)
                 .WithMany(a => a.AdvertisementCategories)
@@ -49,12 +53,42 @@ namespace Strike.Data
                 .WithMany(c => c.AdvertisementCategories)
                 .HasForeignKey(ac => ac.CategoryId);
 
+            //Ignore CategoryIds in Advertisement because it is not a part of the Advertisement model
             modelBuilder.Entity<Advertisement>()
                 .Ignore(a => a.CategoryIds);
 
             //Set createdDate to advertisement
             modelBuilder.Entity<Advertisement>()
                 .Property(a => a.CreatedDate)
+                .HasDefaultValueSql("datetime('now', 'localtime')");
+
+            //One to one relation MessageReceiver
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.MessageReceiver)
+                .WithOne(mr => mr.Message)
+                .HasForeignKey<MessageReceiver>(mr => mr.MessageId);
+
+            //One to one relation MessageSender
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.MessageSender)
+                .WithOne(ms => ms.Message)
+                .HasForeignKey<MessageSender>(ms => ms.MessageId);
+
+            //Forigenkey UserMessageReceiver (One to many relation)
+            modelBuilder.Entity<MessageReceiver>()
+                .HasOne(mr => mr.User)
+                .WithMany(u => u.ReceivedMessages)
+                .HasForeignKey(mr => mr.UserId);
+
+            //Forigenkey UserMessageSender (One to many relation)
+            modelBuilder.Entity<MessageSender>()
+                .HasOne(ms => ms.User)
+                .WithMany(u => u.SentMessages)
+                .HasForeignKey(ms => ms.UserId);
+
+            //Set createdDate to message
+            modelBuilder.Entity<Message>()
+                .Property(m => m.Created)
                 .HasDefaultValueSql("datetime('now', 'localtime')");
 
             //Email only aloud once

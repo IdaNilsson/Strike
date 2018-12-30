@@ -28,7 +28,7 @@
             <p>Skapad: @Html.DisplayFor(model => model.CreatedDate)</p>
             <p>Plats: @Html.DisplayFor(model => model.Area), @Html.DisplayFor(model => model.County)</p>
             <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
-            <button class="btn btn-default">Skicka meddelande till @Html.DisplayFor(model => model.Name)</button>
+            <a href="@Url.Action("Create", "Messages", new { @receiverUserId = Model.UserId, @advertisementId = Model.Id })" class="btn btn-default">Skicka meddelande till @Html.DisplayFor(model => model.Name)</a>
         </div>
     </div>
 </div>

@@ -21,6 +21,22 @@ namespace Strike.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Subject = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false, defaultValueSql: "datetime('now', 'localtime')"),
+                    IsRead = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -58,6 +74,58 @@ namespace Strike.Migrations
                     table.PrimaryKey("PK_Advertisements", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Advertisements_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageReceivers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MessageId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageReceivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageReceivers_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MessageReceivers_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MessageSenders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MessageId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageSenders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageSenders_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MessageSenders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -290,6 +358,28 @@ namespace Strike.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MessageReceivers_MessageId",
+                table: "MessageReceivers",
+                column: "MessageId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MessageReceivers_UserId",
+                table: "MessageReceivers",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MessageSenders_MessageId",
+                table: "MessageSenders",
+                column: "MessageId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MessageSenders_UserId",
+                table: "MessageSenders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -305,10 +395,19 @@ namespace Strike.Migrations
                 name: "AdvertisementImages");
 
             migrationBuilder.DropTable(
+                name: "MessageReceivers");
+
+            migrationBuilder.DropTable(
+                name: "MessageSenders");
+
+            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Advertisements");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Users");

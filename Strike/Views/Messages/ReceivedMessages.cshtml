@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Strike.Models.MessageReceiver>
+@{
+    ViewData["Title"] = "Mottagna meddelanden";
+}
+<div class="blue margin-top container">
+    <h3>Inkorg</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <span>Avsändare</span>
+        </div>
+        <div class="col-md-4">
+            <span>Ämne</span>
+        </div>
+        <div class="col-md-4">
+            <span>Skickat</span>
+        </div>
+    </div>
+
+    @{
+        foreach (var item in Model)
+        {
+            
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Details", "Messages", new { @id = item.MessageId })">
+                            <span>@item.User.FirstName&nbsp;@item.User.LastName</span>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="@Url.Action("Details", "Messages", new { @id = item.MessageId })">
+                            <span>@item.Message.Subject</span>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <span>@item.Message.Created</span>
+                    </div>
+                </div>
+            
+        }
+    }
+
+</div>

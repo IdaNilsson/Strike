@@ -92,7 +92,8 @@ namespace Strike.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string Email, string Password)
         {
-            User user = _context.Users.SingleOrDefault(u => u.Email.Equals(Email, StringComparison.InvariantCultureIgnoreCase));
+            User user = _context.Users
+                .SingleOrDefault(u => u.Email.Equals(Email, StringComparison.InvariantCultureIgnoreCase));
             if (user == null) //No existing user with this email
             {
                 ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
@@ -105,7 +106,6 @@ namespace Strike.Controllers
                 ViewData.Add("error", "Felaktig e-postadress eller lösenord!");
                 return View();
             }
-
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, Email),
