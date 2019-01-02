@@ -3,10 +3,13 @@
 @{
     ViewData["Title"] = "Registrering";
 }
-<div class="container header-color margin-top">
-    <h3>Registrera dig</h3>
-    <hr />
-    <div class="row">
+<div class="margin-top container">
+    <div class="row header-container">
+        <div class="col-md-12">
+            <span>Registrera dig</span>
+        </div>
+    </div>
+    <div class="row full-box">
         <div class="col-md-4">
             <form asp-action="Register">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

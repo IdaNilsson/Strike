@@ -6,70 +6,68 @@
     @{
         ViewData["Title"] = "Redigera";
     }
-    <div class="container margin-top header-color">
-        <h3>Redigera annonsen</h3>
-        <hr />
-        <div class="row">
+<div class="margin-top container">
+    <form asp-action="Edit" enctype="multipart/form-data">
+        <div class="row header-container">
+            <div class="col-md-12">
+                <span>Redigera annonsen</span>
+            </div>
+        </div>
+        <div class="row full-box">
             <div class="col-md-4">
-                <form asp-action="Edit" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
-                    <div class="form-group">
-                        <label asp-for="Name" class="control-label">Namn</label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Phone" class="control-label">Telefonnummer</label>
-                        <input asp-for="Phone" class="form-control" />
-                        <span asp-validation-for="Phone" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Title" class="control-label">Rubrik</label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Price" class="control-label">Pris</label>
-                        <input asp-for="Price" type="number" class="form-control" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label">Beskrivning</label>
-                        <textarea asp-for="Description" class="form-control"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Kategori</label>
-                        <select name="CategoryIds" multiple required class="form-control multi-select">
-                            @{
-                                List<Category> categories = (List<Category>)ViewData["Categories"];
-                                foreach (Category item in categories)
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label">Namn</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label">Telefonnummer</label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label">Rubrik</label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label">Pris</label>
+                    <input asp-for="Price" type="number" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">Beskrivning</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Kategori</label>
+                    <select name="CategoryIds" multiple required class="form-control multi-select">
+                        @{
+                            List<Category> categories = (List<Category>)ViewData["Categories"];
+                            foreach (Category item in categories)
+                            {
+                                bool hasCategory = Model.AdvertisementCategories.Where(ac => ac.CategoryId == item.Id).Count() > 0;
+                                if (hasCategory)
                                 {
-                                    bool hasCategory = Model.AdvertisementCategories.Where(ac => ac.CategoryId == item.Id).Count() > 0;
-                                    if (hasCategory)
-                                    {
-                                        <option value="@item.Id" selected>@item.Name</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-
+                                    <option value="@item.Id" selected>@item.Name</option>
                                 }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+
                             }
-                        </select>
-                    </div>
+                        }
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label asp-for="AdvertisementImages" class="control-label">Bild(er)</label>
-                        <input multiple type="file" name="images" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span>&nbsp;Spara</button>
-                    </div>
-                </form>
+                <div class="form-group">
+                    <label asp-for="AdvertisementImages" class="control-label">Bild(er)</label>
+                    <input multiple type="file" name="images" class="form-control" />
+                </div>
             </div>
 
             <div class="col-md-8">
@@ -78,5 +76,12 @@
                 </div>
             </div>
         </div>
-    </div>
-
+        <div class="row full-box">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default center-block"><span class="glyphicon glyphicon-ok"></span>&nbsp;Spara</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

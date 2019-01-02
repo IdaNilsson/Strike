@@ -1,10 +1,12 @@
 ﻿@model Strike.Models.Message
 
-<div class="container header-color margin-top">
-    <div class="header-title">
-        <span>@ViewData["Title"]</span>
+<div class="margin-top container">
+    <div class="row header-container">
+        <div class="col-md-12">
+            <span>@ViewData["Title"]</span>
+        </div>
     </div>
-    <div class="row">
+    <div class="row full-box">
         <div class="col-md-4">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -74,7 +74,7 @@ namespace Strike.Controllers
                 }
             }
 
-            return View(advertisements);
+            return View(advertisements.OrderBy(a => a.CreatedDate).Reverse());
         }
 
         // GET: Advertisements/Details/5
@@ -108,9 +108,9 @@ namespace Strike.Controllers
         // POST: Advertisements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]        
-        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name,Title,Price,Description,Phone,CreatedDate,County,Area,CategoryIds")] Advertisement advertisement)
         {
             if (ModelState.IsValid)
@@ -136,6 +136,7 @@ namespace Strike.Controllers
             return View(advertisement);
         }
 
+        [Authorize]
         private async void SaveFileUploads(IFormFileCollection files, int advertisementId)
         {
             foreach (var file in files)
@@ -162,6 +163,7 @@ namespace Strike.Controllers
         }
 
         // GET: Advertisements/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -184,6 +186,7 @@ namespace Strike.Controllers
         // POST: Advertisements/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, string Name, string Title, double Price, string Description, string Phone, List<int> CategoryIds)
@@ -233,6 +236,7 @@ namespace Strike.Controllers
 
 
         // GET: Advertisements/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -252,6 +256,7 @@ namespace Strike.Controllers
         }
 
         // POST: Advertisements/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -262,12 +267,14 @@ namespace Strike.Controllers
             return RedirectToAction(nameof(MyAdvertisements));
         }
 
+        [Authorize]
         private bool AdvertisementExists(int id)
         {
             return _context.Advertisements.Any(e => e.Id == id);
         }
 
         // GET: MyAdvertisements
+        [Authorize]
         public async Task<IActionResult> MyAdvertisements()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -281,6 +288,7 @@ namespace Strike.Controllers
             return View(advertisements);
         }
 
+        [Authorize]
         public async Task<IActionResult> DeleteImage(int? id)   
         {
             var img = await _context.AdvertisementImages.FindAsync(id);

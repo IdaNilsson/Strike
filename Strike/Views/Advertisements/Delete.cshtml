@@ -3,22 +3,32 @@
 @{
     ViewData["Title"] = "Delete";
 }
-<div class="container header-color margin-top">
-    <h3>Är du säker på att du vill ta bort annonsen?</h3>
-            <div class="row advertisement-info">
-                <div class="col-md-7">
-                    <span style="white-space: pre-line">@Html.DisplayFor(model => model.Description)</span>
-                </div>
-                <div class="col-md-5">
-                    <p class="advertisement-info-price">Pris: @Html.DisplayFor(model => model.Price) kr</p>
-                    <p>Säljare: @Html.DisplayFor(model => model.Name)</p>
-                    <p>Skapad: @Html.DisplayFor(model => model.CreatedDate)</p>
-                    <p>Plats: @Html.DisplayFor(model => model.Area), @Html.DisplayFor(model => model.County)</p>
-                    <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
-                </div>
+<div class="margin-top container">
+    <div class="row header-container">
+        <div class="col-md-12">
+            <span>Är du säker på att du vill ta bort annonsen?</span>
+        </div>
+    </div>
+    <div class="row full-box">
+        <div class="col-md-7">
+            <span style="white-space: pre-line">@Html.DisplayFor(model => model.Description)</span>
+        </div>
+        <div class="col-md-5">
+            <p class="advertisement-info-price">Pris: @Html.DisplayFor(model => model.Price) kr</p>
+            <p>Säljare: @Html.DisplayFor(model => model.Name)</p>
+            <p>Skapad: @Html.DisplayFor(model => model.CreatedDate)</p>
+            <p>Plats: @Html.DisplayFor(model => model.Area), @Html.DisplayFor(model => model.County)</p>
+            <p>Telefonnummer: @Html.DisplayFor(model => model.Phone)</p>
+        </div>
+    </div>
+    <div class="row full-box">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Radera</button>
+                </form>
             </div>
-            <form asp-action="Delete">
-                <input type="hidden" asp-for="Id" />
-                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>&nbsp;Radera</button>
-            </form>
+        </div>
+    </div>
 </div>

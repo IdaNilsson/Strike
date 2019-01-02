@@ -1,16 +1,21 @@
 ﻿@model Strike.Models.User
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Radera mitt konto";
 }
-<div class="header-color margin-top container">
-    <h3>Är du säker på att du vill ta bort ditt konto?</h3>
-    <hr />
-    <div class="row">
+<div class="margin-top container">
+    <div class="row header-container">
+        <div class="col-md-12">
+            <span>Är du säker på att du vill ta bort ditt konto?</span>
+        </div>
     </div>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Radera mitt konto</button>
-        <a asp-action="Edit" asp-route-id="@Model.Id">Tillbaka till min sida</a>
-    </form>
+    <div class="row full-box">
+        <div class="col-md-12">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;Radera mitt konto</button>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="pull-right">Tillbaka till min sida</a>
+            </form>
+        </div>
+    </div>
 </div>

@@ -4,9 +4,9 @@
 @{
     ViewData["Title"] = "Annonser";
 }
-<div class="header-color margin-top container">
-    <form asp-action="Index">
-        <div class="row search-container">
+<div class="margin-top container">
+    <div class="row full-box">
+        <form asp-action="Index">
             <div class="col-md-4">
                 <div class="form-group">
                     <input id="searchInput" name="search" placeholder="Sök..." class="form-control" />
@@ -43,8 +43,9 @@
                     <button class="btn btn-primary center-block" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;Sök</button>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
 
     <div class="striped">
         @{

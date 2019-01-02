@@ -4,13 +4,13 @@
     ViewData["Title"] = "Inställningar";
 }
 
-<div class="header-color margin-top container">
-    <div class="row header-title">
-        <div class="col-md-3">
+<div class="margin-top container">
+    <div class="row header-container">
+        <div class="col-md-12">
             <span>Inställningar</span>
         </div>
     </div>
-    <div class="row edit-color" style="background-color:#F4F4F4">
+    <div class="row full-box">
         <div class="col-md-6">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -68,8 +68,8 @@
         </div>
     </div>
 </div>
-<div class="header-color container">
-    <div class="row edit-color" style="background-color:#F4F4F4">
+<div class="container">
+    <div class="row full-box">
         <div class="form-group col-md-12">
             <form>
                 <button class="btn btn-danger center-block" asp-action="Delete" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-remove"></span>&nbsp;Radera mitt Strike konto</button>

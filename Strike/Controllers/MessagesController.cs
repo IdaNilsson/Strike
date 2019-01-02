@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace Strike.Controllers
         }
 
         // GET: Messages/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -30,6 +32,7 @@ namespace Strike.Controllers
 
             var message = await _context.Messages
                 .Include(m => m.MessageSender)
+                .ThenInclude(ms => ms.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (message == null)
             {
@@ -47,6 +50,7 @@ namespace Strike.Controllers
         }
 
         // GET: Messages/Create
+        [Authorize]
         public IActionResult Create(int? receiverUserId, int? advertisementId)
         {
             ViewData["receiverUserId"] = receiverUserId;
@@ -57,6 +61,7 @@ namespace Strike.Controllers
         }
 
         // POST: Messages/Create
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int receiverUserId, int? advertisementId, string subject, string text)
@@ -91,40 +96,24 @@ namespace Strike.Controllers
             
         }
 
-        // GET: Messages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var message = await _context.Messages
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (message == null)
-            {
-                return NotFound();
-            }
-
-            return View(message);
-        }
-
         // POST: Messages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [Authorize]
+        [HttpGet, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var message = await _context.Messages.FindAsync(id);
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Delete));
+            return RedirectToAction("ReceivedMessages", "Messages");
         }
 
+        [Authorize]
         private bool MessageExists(int id)
         {
             return _context.Messages.Any(e => e.Id == id);
         }
 
+        [Authorize]
         public async Task<IActionResult> ReceivedMessages()
         {
             var identity = (ClaimsIdentity)User.Identity;
@@ -139,19 +128,20 @@ namespace Strike.Controllers
             return View(loggedInUser.ReceivedMessages.OrderBy(rm => rm.Message.Created).Reverse());
         }
 
-        public async Task<IActionResult> SentMessages()
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-            int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
-            User loggedInUser = await _context.Users
-                .Include(u => u.SentMessages)
-                    .ThenInclude(sm => sm.Message)
-                .FirstOrDefaultAsync(u => u.Id == userId);
+        /* public async Task<IActionResult> SentMessages()
+         {
+             var identity = (ClaimsIdentity)User.Identity;
+             int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
+             User loggedInUser = await _context.Users
+                 .Include(u => u.SentMessages)
+                     .ThenInclude(sm => sm.Message)
+                 .FirstOrDefaultAsync(u => u.Id == userId);
 
-            return View(loggedInUser.SentMessages);
-        }
+             return View(loggedInUser.SentMessages);
+         }*/
 
         //Returns count of unread messages
+        [Authorize]
         [HttpGet]
         public JsonResult GetUnreadCount()
         {

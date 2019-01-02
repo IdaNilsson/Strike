@@ -69,12 +69,15 @@
     margin-top: 100px;
 }
 
-.header-color {
+.header-container {
     background-color: #D9DBDC;
+    font-size: 16px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
-.header-title {
-    font-size: 16px;
+.full-box {
+    background-color: #F4F4F4;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -159,26 +162,13 @@
     white-space: nowrap;
     padding-bottom: 20px;
     padding-top: 20px;
-    background-color: aliceblue;
-}
-.advertisement-info {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-top: 1px solid lightgray;
-    padding-top: 20px;
+    background-color: #F9F9F9;
 }
 
 /*_AdvertisementImageDelete */
 
 .remove-image-button{
     padding: 10px 50px;
-}
-
-/*User*/
-
-/*Edit*/
-.edit-color {
-    background-color: #F4F4F4;
 }
 
 /*Inbox*/
