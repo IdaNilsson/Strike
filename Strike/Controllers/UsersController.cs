@@ -200,6 +200,11 @@ namespace Strike.Controllers
             int userId = Convert.ToInt32(identity.FindFirst(Models.User.UserId).Value);
             User loggedInUser = await _context.Users.FindAsync(userId);
 
+            if (changePasswordForm.CurrentPassword == null || changePasswordForm.NewPassword == null || changePasswordForm.RepeatNewPassword == null)
+            {
+                return View("Edit", loggedInUser);
+            }
+
             bool passwordMatches = BCrypt.Net.BCrypt.Verify(changePasswordForm.CurrentPassword, loggedInUser.Password);
 
             if (!passwordMatches)

@@ -15,7 +15,7 @@ namespace Strike.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        [MinLength(8)]
+        [MinLength(8, ErrorMessage = "Lösenordet måste vara minst 8 tecken.")]
         public string Password { get; set; }
         [Required]
         [EmailAddress]
