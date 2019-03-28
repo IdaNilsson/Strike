@@ -182,6 +182,7 @@ namespace Strike.Controllers
             var user = await _context.Users.FindAsync(id);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
+            await Logout();
             return RedirectToAction(nameof(Login));
         }
 
