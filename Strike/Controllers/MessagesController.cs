@@ -121,6 +121,8 @@ namespace Strike.Controllers
             User loggedInUser = await _context.Users
                 .Include(u => u.ReceivedMessages)
                     .ThenInclude(rm => rm.Message)
+                    .ThenInclude(m => m.MessageSender)
+                    .ThenInclude(ms => ms.User)
                 .Include(u => u.ReceivedMessages)
                     .ThenInclude(rm => rm.User)
                 .FirstOrDefaultAsync(u => u.Id == userId);

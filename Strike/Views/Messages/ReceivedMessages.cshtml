@@ -31,7 +31,7 @@
                         }
                         &nbsp;
                         <a href="@Url.Action("Details", "Messages", new { @id = item.MessageId })">
-                            <span>@item.User.FirstName&nbsp;@item.User.LastName</span>
+                            <span>@item.Message.MessageSender.User.FirstName&nbsp;@item.Message.MessageSender.User.LastName</span>
                         </a>
                     </div>
                     <div class="col-md-5">
